@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamdi Oussama | Software & Full-Stack Developer</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#f3e5ab',
+                            500: '#d4af37',
+                            600: '#aa8c2c',
+                            glow: '#ffd700',
+                        },
+                        dark: {
+                            900: '#09090b',
+                            800: '#121215',
+                            700: '#1a1a20',
+                            600: '#272730'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Space Grotesk', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 3s infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%': { boxShadow: '0 0 15px rgba(212, 175, 55, 0.2)' },
+                            '100%': { boxShadow: '0 0 35px rgba(212, 175, 55, 0.6)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ffd700;
+        }
+
+        /* Gold gradient text */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fff2ac 0%, #d4af37 50%, #aa8c2c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Gold glow borders */
+        .gold-border-glow {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+        .gold-border-glow:hover {
+            border-color: rgba(212, 175, 55, 0.9);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Particles background canvas */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-gray-200 font-sans antialiased relative overflow-x-hidden">
+
+    <!-- Interactive Background Canvas -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-dark-900/80 backdrop-blur-md border-b border-gold-500/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo / Monogram -->
+            <a href="#hero" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-500 to-amber-700 flex items-center justify-center font-heading font-bold text-dark-900 text-xl shadow-lg shadow-gold-500/20 group-hover:scale-105 transition-transform">
+                    HO
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-heading font-bold text-lg text-white group-hover:text-gold-500 transition-colors">Hamdi Oussama</span>
+                    <span class="text-xs text-gold-500/80 tracking-widest uppercase font-semibold">Dev & IT Specialist</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#about" class="text-gray-300 hover:text-gold-500 transition-colors">About</a>
+                <a href="#skills" class="text-gray-300 hover:text-gold-500 transition-colors">Skills</a>
+                <a href="#services" class="text-gray-300 hover:text-gold-500 transition-colors">Services</a>
+                <a href="#projects" class="text-gray-300 hover:text-gold-500 transition-colors">Projects</a>
+                <a href="#contact" class="px-5 py-2.5 rounded-full border border-gold-500/40 text-gold-500 hover:bg-gold-500 hover:text-dark-900 transition-all font-semibold shadow-lg shadow-gold-500/10">
+                    Hire Me
+                </a>
+            </nav>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-gold-500 focus:outline-none p-2">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-dark-800/95 backdrop-blur-lg border-b border-gold-500/20 px-4 py-6 space-y-4">
+            <a href="#about" class="block text-gray-300 hover:text-gold-500 font-medium mobile-link">About</a>
+            <a href="#skills" class="block text-gray-300 hover:text-gold-500 font-medium mobile-link">Skills</a>
+            <a href="#services" class="block text-gray-300 hover:text-gold-500 font-medium mobile-link">Services</a>
+            <a href="#projects" class="block text-gray-300 hover:text-gold-500 font-medium mobile-link">Projects</a>
+            <a href="#contact" class="block text-center px-4 py-2 rounded-lg bg-gold-500 text-dark-900 font-bold mobile-link">
+                Hire Me
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative pt-32 pb-20 md:pt-40 md:pb-32 min-h-screen flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Column: Intro Text -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-dark-800 border border-gold-500/30 text-gold-500 text-xs sm:text-sm font-semibold uppercase tracking-wider shadow-inner">
+                        <span class="w-2 h-2 rounded-full bg-gold-500 animate-ping"></span>
+                        Available for Opportunities
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white leading-tight">
+                        Hi, I'm <span class="gold-gradient-text">Hamdi Oussama</span>
+                    </h1>
+                    
+                    <div class="text-xl sm:text-2xl font-medium text-gray-300 h-10 flex items-center justify-center lg:justify-start gap-2">
+                        <span>I am a</span>
+                        <span id="typedText" class="text-gold-500 font-bold underline decoration-gold-500/40"></span>
+                    </div>
+
+                    <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Computer Science Graduate passionate about building modern web applications, scalable software solutions, and maintaining secure IT infrastructures.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-wrap gap-4 justify-center lg:justify-start pt-4">
+                        <a href="#contact" class="px-8 py-4 rounded-xl bg-gradient-to-r from-gold-500 to-amber-600 text-dark-900 font-bold hover:shadow-lg hover:shadow-gold-500/30 hover:scale-105 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Get In Touch
+                        </a>
+                        <a href="#projects" class="px-8 py-4 rounded-xl bg-dark-800 border border-gold-500/30 text-white font-semibold hover:border-gold-500 hover:text-gold-500 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-laptop-code"></i> View Projects
+                        </a>
+                    </div>
+
+                    <!-- Quick Tech Badges -->
+                    <div class="pt-6 border-t border-gray-800 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-gray-400 text-sm">
+                        <span class="text-xs uppercase text-gold-500/70 font-semibold tracking-wider">Top Tech:</span>
+                        <span class="px-3 py-1 bg-dark-800 rounded-md border border-gray-800">Full-Stack</span>
+                        <span class="px-3 py-1 bg-dark-800 rounded-md border border-gray-800">Python / Java</span>
+                        <span class="px-3 py-1 bg-dark-800 rounded-md border border-gray-800">PHP & MySQL</span>
+                        <span class="px-3 py-1 bg-dark-800 rounded-md border border-gray-800">Cybersecurity</span>
+                    </div>
+                </div>
+
+                <!-- Hero Right Column: Avatar / Photo Holder -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-center">
+                    <div class="relative group">
+                        <!-- Glowing Ring -->
+                        <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-gold-500 via-amber-300 to-amber-700 blur-lg opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse-glow"></div>
+                        
+                        <!-- Image Container -->
+                        <div class="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-dark-800 p-2 border-2 border-gold-500/60 overflow-hidden flex items-center justify-center shadow-2xl">
+                            <img id="profileImage" src="https://placehold.co/400x400/121215/d4af37?text=Oussama+Hamdi" alt="Hamdi Oussama" class="w-full h-full object-cover rounded-full transition-transform duration-500 group-hover:scale-105">
+                        </div>
+
+                        <!-- Upload Photo Trigger Overlay -->
+                        <label for="photoUpload" class="absolute bottom-2 right-4 bg-gold-500 text-dark-900 p-3 rounded-full shadow-lg cursor-pointer hover:bg-gold-400 transition-all" title="Upload / Change Photo">
+                            <i class="fa-solid fa-camera text-lg"></i>
+                            <input type="file" id="photoUpload" accept="image/*" class="hidden">
+                        </label>
+                    </div>
+
+                    <p class="text-xs text-gray-500 mt-4 italic">Tip: Click the camera icon to set your profile picture!</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-20 bg-dark-800/50 border-y border-gold-500/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-gold-500 font-semibold mb-2">Background & Education</h2>
+                <p class="text-3xl sm:text-4xl font-heading font-bold text-white">About Me</p>
+                <div class="w-16 h-1 bg-gold-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Stats Cards -->
+                <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+                    <div class="p-6 rounded-2xl bg-dark-800 border gold-border-glow text-center">
+                        <i class="fa-solid fa-graduation-cap text-3xl text-gold-500 mb-3"></i>
+                        <h4 class="text-2xl font-bold text-white font-heading">Bachelor's</h4>
+                        <p class="text-xs text-gray-400 mt-1">Computer Science Degree</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-dark-800 border gold-border-glow text-center">
+                        <i class="fa-solid fa-code text-3xl text-gold-500 mb-3"></i>
+                        <h4 class="text-2xl font-bold text-white font-heading">Full-Stack</h4>
+                        <p class="text-xs text-gray-400 mt-1">Web & Software Dev</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-dark-800 border gold-border-glow text-center">
+                        <i class="fa-solid fa-shield-halved text-3xl text-gold-500 mb-3"></i>
+                        <h4 class="text-2xl font-bold text-white font-heading">IT & Security</h4>
+                        <p class="text-xs text-gray-400 mt-1">Network & Basics</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-dark-800 border gold-border-glow text-center">
+                        <i class="fa-solid fa-bullseye text-3xl text-gold-500 mb-3"></i>
+                        <h4 class="text-2xl font-bold text-white font-heading">Goal-Driven</h4>
+                        <p class="text-xs text-gray-400 mt-1">Innovative Solutions</p>
+                    </div>
+                </div>
+
+                <!-- Right Detailed Bio -->
+                <div class="lg:col-span-7 space-y-6">
+                    <h3 class="text-2xl font-bold text-white font-heading">
+                        Passionate Computer Science Graduate & Aspiring Developer
+                    </h3>
+                    
+                    <p class="text-gray-300 leading-relaxed">
+                        Hello! I’m <strong class="text-gold-500">Oussama Hamdi</strong>, a Computer Science graduate with a strong interest in web development, software engineering, and cybersecurity. I enjoy building modern websites and applications, learning new technologies, and solving complex technical problems.
+                    </p>
+
+                    <p class="text-gray-300 leading-relaxed">
+                        I am continuously improving my skills and looking for exciting opportunities to grow professionally and contribute to impactful digital projects. 
+                    </p>
+
+                    <div class="p-5 rounded-xl bg-dark-900 border-l-4 border-gold-500 text-gray-300">
+                        <span class="block text-xs uppercase text-gold-500 font-bold tracking-wider mb-1">My Ultimate Goal</span>
+                        "To become a professional Software Developer and build innovative, high-performance digital solutions that solve real-world problems."
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-300 pt-2">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-gold-500"></i>
+                            <span>oussamaha780@gmail.com</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-gold-500"></i>
+                            <span>+974 33387017</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-location-dot text-gold-500"></i>
+                            <span>Available Globally / Remote</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-github text-gold-500"></i>
+                            <span>github.com/oussama2026dev</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-gold-500 font-semibold mb-2">Technical Proficiency</h2>
+                <p class="text-3xl sm:text-4xl font-heading font-bold text-white">Skills & Expertise</p>
+                <div class="w-16 h-1 bg-gold-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Skills Category Tabs -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="skill-tab active px-5 py-2.5 rounded-full text-sm font-semibold bg-gold-500 text-dark-900 transition-all" data-category="all">
+                    All Skills
+                </button>
+                <button class="skill-tab px-5 py-2.5 rounded-full text-sm font-semibold bg-dark-800 text-gray-300 hover:text-gold-500 transition-all" data-category="web">
+                    Web & Backend
+                </button>
+                <button class="skill-tab px-5 py-2.5 rounded-full text-sm font-semibold bg-dark-800 text-gray-300 hover:text-gold-500 transition-all" data-category="languages">
+                    Programming Languages
+                </button>
+                <button class="skill-tab px-5 py-2.5 rounded-full text-sm font-semibold bg-dark-800 text-gray-300 hover:text-gold-500 transition-all" data-category="it">
+                    IT & Security
+                </button>
+                <button class="skill-tab px-5 py-2.5 rounded-full text-sm font-semibold bg-dark-800 text-gray-300 hover:text-gold-500 transition-all" data-category="soft">
+                    Soft Skills
+                </button>
+            </div>
+
+            <!-- Skills Cards Grid -->
+            <div id="skillsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                
+                <!-- Skill Card Template items -->
+                <!-- HTML5 -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="web">
+                    <i class="fa-brands fa-html5 text-4xl text-orange-500 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">HTML5</h4>
+                    <span class="text-xs text-gray-400 mt-1">Frontend</span>
+                </div>
+
+                <!-- CSS3 -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="web">
+                    <i class="fa-brands fa-css3-alt text-4xl text-blue-500 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">CSS3</h4>
+                    <span class="text-xs text-gray-400 mt-1">Frontend</span>
+                </div>
+
+                <!-- JavaScript -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="web languages">
+                    <i class="fa-brands fa-js text-4xl text-yellow-400 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">JavaScript</h4>
+                    <span class="text-xs text-gray-400 mt-1">Frontend/Backend</span>
+                </div>
+
+                <!-- PHP -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="web languages">
+                    <i class="fa-brands fa-php text-4xl text-indigo-400 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">PHP</h4>
+                    <span class="text-xs text-gray-400 mt-1">Backend</span>
+                </div>
+
+                <!-- MySQL -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="web">
+                    <i class="fa-solid fa-database text-4xl text-amber-500 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">MySQL</h4>
+                    <span class="text-xs text-gray-400 mt-1">Database</span>
+                </div>
+
+                <!-- Python -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="languages">
+                    <i class="fa-brands fa-python text-4xl text-blue-400 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">Python</h4>
+                    <span class="text-xs text-gray-400 mt-1">Scripting / Dev</span>
+                </div>
+
+                <!-- Java -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="languages">
+                    <i class="fa-brands fa-java text-4xl text-red-500 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">Java</h4>
+                    <span class="text-xs text-gray-400 mt-1">OOP / Software</span>
+                </div>
+
+                <!-- C++ -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="languages">
+                    <i class="fa-solid fa-code text-4xl text-cyan-400 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">C++</h4>
+                    <span class="text-xs text-gray-400 mt-1">Systems / Algo</span>
+                </div>
+
+                <!-- Git & GitHub -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="it">
+                    <i class="fa-brands fa-git-alt text-4xl text-orange-600 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">Git & GitHub</h4>
+                    <span class="text-xs text-gray-400 mt-1">Version Control</span>
+                </div>
+
+                <!-- Linux -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="it">
+                    <i class="fa-brands fa-linux text-4xl text-yellow-300 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">Linux</h4>
+                    <span class="text-xs text-gray-400 mt-1">OS Environment</span>
+                </div>
+
+                <!-- Networking -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="it">
+                    <i class="fa-solid fa-network-wired text-4xl text-teal-400 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">Networking</h4>
+                    <span class="text-xs text-gray-400 mt-1">IT Infrastructure</span>
+                </div>
+
+                <!-- Cybersecurity -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="it">
+                    <i class="fa-solid fa-user-shield text-4xl text-gold-500 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">Cybersecurity</h4>
+                    <span class="text-xs text-gray-400 mt-1">Security Basics</span>
+                </div>
+
+                <!-- Problem Solving -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="soft">
+                    <i class="fa-solid fa-brain text-4xl text-purple-400 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">Problem Solving</h4>
+                    <span class="text-xs text-gray-400 mt-1">Soft Skill</span>
+                </div>
+
+                <!-- Teamwork & Communication -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="soft">
+                    <i class="fa-solid fa-people-group text-4xl text-emerald-400 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">Teamwork</h4>
+                    <span class="text-xs text-gray-400 mt-1">Soft Skill</span>
+                </div>
+
+                <!-- Time Management -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="soft">
+                    <i class="fa-solid fa-clock text-4xl text-pink-400 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">Time Mgmt</h4>
+                    <span class="text-xs text-gray-400 mt-1">Soft Skill</span>
+                </div>
+
+                <!-- Continuous Learning -->
+                <div class="skill-card bg-dark-800 p-4 rounded-xl border gold-border-glow text-center flex flex-col items-center justify-center group" data-category="soft">
+                    <i class="fa-solid fa-seedling text-4xl text-green-400 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-white text-sm">Continuous Learning</h4>
+                    <span class="text-xs text-gray-400 mt-1">Mindset</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-dark-800/50 border-y border-gold-500/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-gold-500 font-semibold mb-2">What I Offer</h2>
+                <p class="text-3xl sm:text-4xl font-heading font-bold text-white">Services & Expertise</p>
+                <div class="w-16 h-1 bg-gold-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Service 1 -->
+                <div class="bg-dark-800 p-8 rounded-2xl border gold-border-glow relative group overflow-hidden">
+                    <div class="w-14 h-14 rounded-xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-500 text-2xl mb-6 group-hover:bg-gold-500 group-hover:text-dark-900 transition-all">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 font-heading">Web Development</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Creating responsive, high-performance websites and dynamic web applications using modern HTML5, CSS3, JavaScript, PHP, and MySQL.
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold-500"></i> Responsive UI/UX Layouts</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold-500"></i> Full-Stack Web Architecture</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-dark-800 p-8 rounded-2xl border gold-border-glow relative group overflow-hidden">
+                    <div class="w-14 h-14 rounded-xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-500 text-2xl mb-6 group-hover:bg-gold-500 group-hover:text-dark-900 transition-all">
+                        <i class="fa-solid fa-code font-bold"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 font-heading">Software Engineering</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Designing and implementing robust software applications in Python, Java, and C++ with clean architecture and object-oriented principles.
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold-500"></i> Algorithm & Data Structures</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold-500"></i> Problem Solving & Logic</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-dark-800 p-8 rounded-2xl border gold-border-glow relative group overflow-hidden">
+                    <div class="w-14 h-14 rounded-xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-500 text-2xl mb-6 group-hover:bg-gold-500 group-hover:text-dark-900 transition-all">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 font-heading">IT Support & Networks</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Providing hardware/software troubleshooting, Linux OS system administration, network setups, and cybersecurity fundamentals.
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold-500"></i> Linux Environment Config</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold-500"></i> Security Auditing Basics</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-gold-500 font-semibold mb-2">Portfolio Showcase</h2>
+                <p class="text-3xl sm:text-4xl font-heading font-bold text-white">Featured Projects</p>
+                <div class="w-16 h-1 bg-gold-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Project Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project Card 1 -->
+                <div class="bg-dark-800 rounded-2xl border gold-border-glow overflow-hidden flex flex-col justify-between group">
+                    <div class="relative overflow-hidden h-48 bg-dark-900">
+                        <img src="https://placehold.co/600x400/121215/d4af37?text=Full-Stack+Web+App" alt="Full-Stack Web App" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-dark-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                            <a href="https://github.com/oussama2026dev" target="_blank" class="w-10 h-10 rounded-full bg-gold-500 text-dark-900 flex items-center justify-center font-bold hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-gold-500 font-semibold uppercase tracking-wider">PHP / MySQL / JS</span>
+                            <h3 class="text-xl font-bold text-white mt-1 mb-2 font-heading">E-Commerce Management System</h3>
+                            <p class="text-gray-400 text-sm">
+                                Full-stack dynamic web portal built with PHP and MySQL database backend featuring user auth, cart system, and dynamic management.
+                            </p>
+                        </div>
+                        <div class="mt-6 flex items-center justify-between border-t border-gray-800 pt-4">
+                            <span class="text-xs text-gray-400"><i class="fa-solid fa-code"></i> Full-Stack</span>
+                            <a href="https://github.com/oussama2026dev" target="_blank" class="text-xs font-bold text-gold-500 hover:underline flex items-center gap-1">
+                                View Code <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="bg-dark-800 rounded-2xl border gold-border-glow overflow-hidden flex flex-col justify-between group">
+                    <div class="relative overflow-hidden h-48 bg-dark-900">
+                        <img src="https://placehold.co/600x400/121215/d4af37?text=Python+Cybersecurity+Tool" alt="Cybersecurity Tool" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-dark-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                            <a href="https://github.com/oussama2026dev" target="_blank" class="w-10 h-10 rounded-full bg-gold-500 text-dark-900 flex items-center justify-center font-bold hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-gold-500 font-semibold uppercase tracking-wider">Python / Security</span>
+                            <h3 class="text-xl font-bold text-white mt-1 mb-2 font-heading">Network Security Scanner</h3>
+                            <p class="text-gray-400 text-sm">
+                                Automated python script utility designed to inspect open network ports, analyze basic vulnerability vectors, and monitor connections.
+                            </p>
+                        </div>
+                        <div class="mt-6 flex items-center justify-between border-t border-gray-800 pt-4">
+                            <span class="text-xs text-gray-400"><i class="fa-solid fa-shield-halved"></i> Cybersecurity</span>
+                            <a href="https://github.com/oussama2026dev" target="_blank" class="text-xs font-bold text-gold-500 hover:underline flex items-center gap-1">
+                                View Code <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="bg-dark-800 rounded-2xl border gold-border-glow overflow-hidden flex flex-col justify-between group">
+                    <div class="relative overflow-hidden h-48 bg-dark-900">
+                        <img src="https://placehold.co/600x400/121215/d4af37?text=Java+Software+System" alt="Java Software Application" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-dark-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                            <a href="https://github.com/oussama2026dev" target="_blank" class="w-10 h-10 rounded-full bg-gold-500 text-dark-900 flex items-center justify-center font-bold hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-gold-500 font-semibold uppercase tracking-wider">Java / OOP</span>
+                            <h3 class="text-xl font-bold text-white mt-1 mb-2 font-heading">Desktop Inventory Manager</h3>
+                            <p class="text-gray-400 text-sm">
+                                Object-oriented Java desktop application engineered for organizing hardware and software IT inventory with data persistence.
+                            </p>
+                        </div>
+                        <div class="mt-6 flex items-center justify-between border-t border-gray-800 pt-4">
+                            <span class="text-xs text-gray-400"><i class="fa-solid fa-desktop"></i> Software App</span>
+                            <a href="https://github.com/oussama2026dev" target="_blank" class="text-xs font-bold text-gold-500 hover:underline flex items-center gap-1">
+                                View Code <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- GitHub CTA -->
+            <div class="mt-12 text-center">
+                <a href="https://github.com/oussama2026dev" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-dark-800 border border-gold-500/40 text-gold-500 hover:bg-gold-500 hover:text-dark-900 font-bold transition-all shadow-lg">
+                    <i class="fa-brands fa-github text-xl"></i> View More Repositories on GitHub
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Contact & Hire Me Section -->
+    <section id="contact" class="py-20 bg-dark-800/50 border-t border-gold-500/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-gold-500 font-semibold mb-2">Let's Work Together</h2>
+                <p class="text-3xl sm:text-4xl font-heading font-bold text-white">Contact Me</p>
+                <div class="w-16 h-1 bg-gold-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- Contact Info Cards (Left) -->
+                <div class="lg:col-span-5 space-y-6">
+                    <h3 class="text-2xl font-bold text-white font-heading">Get In Touch</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Interested in hiring me for a role, collaborating on a project, or discussing software ideas? Send a message or reach out directly!
+                    </p>
+
+                    <!-- Email Box -->
+                    <div class="p-6 rounded-2xl bg-dark-800 border gold-border-glow flex items-center justify-between group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-gold-500/10 text-gold-500 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-400 uppercase tracking-wider block">Email</span>
+                                <span class="text-white font-semibold text-sm sm:text-base">oussamaha780@gmail.com</span>
+                            </div>
+                        </div>
+                        <button onclick="copyToClipboard('oussamaha780@gmail.com', 'Email copied!')" class="text-gray-400 hover:text-gold-500 p-2" title="Copy Email">
+                            <i class="fa-solid fa-copy text-lg"></i>
+                        </button>
+                    </div>
+
+                    <!-- Phone / WhatsApp Box -->
+                    <div class="p-6 rounded-2xl bg-dark-800 border gold-border-glow flex items-center justify-between group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-gold-500/10 text-gold-500 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-400 uppercase tracking-wider block">Phone / WhatsApp</span>
+                                <span class="text-white font-semibold text-sm sm:text-base">+974 33387017</span>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/97433387017" target="_blank" class="text-gray-400 hover:text-gold-500 p-2" title="Chat on WhatsApp">
+                            <i class="fa-brands fa-whatsapp text-xl"></i>
+                        </a>
+                    </div>
+
+                    <!-- Social Links Grid -->
+                    <div class="pt-4 flex items-center gap-4">
+                        <a href="https://www.linkedin.com/in/oussama-hamdi-a90a05418" target="_blank" class="flex-1 py-3 bg-dark-800 border border-gray-800 hover:border-gold-500 rounded-xl flex items-center justify-center gap-2 text-white hover:text-gold-500 transition-all">
+                            <i class="fa-brands fa-linkedin text-xl"></i> LinkedIn
+                        </a>
+                        <a href="https://github.com/oussama2026dev" target="_blank" class="flex-1 py-3 bg-dark-800 border border-gray-800 hover:border-gold-500 rounded-xl flex items-center justify-center gap-2 text-white hover:text-gold-500 transition-all">
+                            <i class="fa-brands fa-github text-xl"></i> GitHub
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- Interactive Form (Right) -->
+                <div class="lg:col-span-7">
+                    <form id="contactForm" class="bg-dark-800 p-8 rounded-2xl border gold-border-glow space-y-6">
+                        <h3 class="text-xl font-bold text-white font-heading mb-4">Send Me a Message</h3>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs uppercase text-gray-400 font-semibold mb-2">Your Name</label>
+                                <input type="text" id="senderName" required placeholder="John Doe" class="w-full bg-dark-900 border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase text-gray-400 font-semibold mb-2">Your Email</label>
+                                <input type="email" id="senderEmail" required placeholder="name@example.com" class="w-full bg-dark-900 border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs uppercase text-gray-400 font-semibold mb-2">Subject</label>
+                            <input type="text" id="senderSubject" required placeholder="Project Opportunity / Hello" class="w-full bg-dark-900 border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs uppercase text-gray-400 font-semibold mb-2">Message</label>
+                            <textarea id="senderMessage" rows="5" required placeholder="Write your message here..." class="w-full bg-dark-900 border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-gold-500 to-amber-600 text-dark-900 font-bold hover:shadow-lg hover:shadow-gold-500/20 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-dark-900 border-t border-gray-800 text-center text-gray-500 text-xs">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 Hamdi Oussama. All rights reserved.</p>
+            <p class="flex items-center gap-1">
+                Designed with <span class="text-gold-500">♥</span> & Black Gold Aesthetics
+            </p>
+        </div>
+    </footer>
+
+    <!-- Toast Alert Box -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-gold-500 text-dark-900 px-6 py-3 rounded-xl font-bold shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-xl"></i>
+        <span id="toastMsg">Message sent successfully!</span>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // 1. Dynamic Typing Effect for Roles
+        const roles = ["Software Developer", "Web Developer", "Full-Stack Developer", "IT Specialist"];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedTextSpan = document.getElementById("typedText");
+
+        function typeEffect() {
+            const currentRole = roles[roleIndex];
+            if (isDeleting) {
+                typedTextSpan.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextSpan.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 40 : 80;
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                typeSpeed = 2000; // Pause at end
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+        document.addEventListener("DOMContentLoaded", typeEffect);
+
+        // 2. Profile Photo Upload Handler
+        const photoUploadInput = document.getElementById('photoUpload');
+        const profileImg = document.getElementById('profileImage');
+
+        photoUploadInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    profileImg.src = event.target.result;
+                    showToast("Profile photo updated successfully!");
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 3. Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 4. Skills Category Filtering
+        const skillTabs = document.querySelectorAll('.skill-tab');
+        const skillCards = document.querySelectorAll('.skill-card');
+
+        skillTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                skillTabs.forEach(t => {
+                    t.classList.remove('bg-gold-500', 'text-dark-900');
+                    t.classList.add('bg-dark-800', 'text-gray-300');
+                });
+                tab.classList.add('bg-gold-500', 'text-dark-900');
+                tab.classList.remove('bg-dark-800', 'text-gray-300');
+
+                const category = tab.getAttribute('data-category');
+
+                skillCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category').includes(category)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 5. Contact Form Handler & Toast Notification
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            showToast("Thank you, Oussama received your message!");
+            contactForm.reset();
+        });
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+
+        // 6. Copy to Clipboard Utility
+        function copyToClipboard(text, msg) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast(msg);
+        }
+
+        // 7. Golden Dynamic Particles Background (Canvas)
+        window.onload = function () {
+            const canvas = document.getElementById('bgCanvas');
+            const ctx = canvas.getContext('2d');
+
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const particles = [];
+            const particleCount = Math.min(width / 25, 45);
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 2 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    alpha: Math.random() * 0.5 + 0.2
+                });
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, width, height);
+
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212, 175, 55, ${p.alpha})`;
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animateParticles);
+            }
+
+            animateParticles();
+        };
+    </script>
+</body>
+</html>

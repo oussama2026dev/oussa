@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oussama Hamdi | Software & Web Developer Portfolio</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <!-- CSS File -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Dynamic Particle Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">OUSSAMA<span>.DEV</span></div>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="menu-toggle" id="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <span class="badge">Welcome to my Portfolio</span>
+                <h1>Hi, I'm <span class="gold-text">Oussama Hamdi</span></h1>
+                <h2 class="typing-container">
+                    I am a <span class="typing-text" id="typewriter"></span><span class="cursor"> </span>
+                </h2>
+                <p>Computer Science Graduate driven by passion for software engineering, web development, and cybersecurity. Building innovative, elegant, and secure digital solutions.</p>
+                
+                <div class="hero-btns">
+                    <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Get In Touch</a>
+                    <a href="#projects" class="btn btn-outline"><i class="fas fa-code"></i> View Projects</a>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/oussama-hamdi-a90a05418" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/oussama2026dev" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="mailto:oussamaha780@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://wa.me/97433387017" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <!-- Profile Image Area with Image Upload Feature -->
+            <div class="hero-image-box">
+                <div class="image-wrapper">
+                    <img id="profile-img" src="https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?auto=format&fit=crop&w=600&q=80" alt="Oussama Hamdi">
+                    <label for="image-upload" class="upload-badge" title="Click to change your photo">
+                        <i class="fas fa-camera"></i>
+                    </label>
+                    <input type="file" id="image-upload" accept="image/*" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="section-title">
+            <h2>About <span>Me</span></h2>
+            <div class="title-underline"></div>
+        </div>
+        <div class="about-grid">
+            <div class="about-card highlight">
+                <i class="fas fa-graduation-cap icon"></i>
+                <h3>Education</h3>
+                <p>Bachelor's Degree in Computer Science with a solid academic foundation in algorithmics, computer architecture, and modern programming paradigms.</p>
+            </div>
+            <div class="about-card highlight">
+                <i class="fas fa-bullseye icon"></i>
+                <h3>My Goal</h3>
+                <p>To become a top-tier Professional Software Developer and build innovative, efficient, and scalable digital solutions that create real value.</p>
+            </div>
+            <div class="about-card highlight">
+                <i class="fas fa-shield-alt icon"></i>
+                <h3>Interests</h3>
+                <p>Strongly interested in Full-Stack Web Development, Software Engineering, Linux administration, System Security, and Cybersecurity best practices.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section dark-bg">
+        <div class="section-title">
+            <h2>Technical <span>Skills</span></h2>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="skills-filter">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="web">Web Dev</button>
+            <button class="filter-btn" data-filter="prog">Programming</button>
+            <button class="filter-btn" data-filter="it">IT & Security</button>
+            <button class="filter-btn" data-filter="soft">Soft Skills</button>
+        </div>
+
+        <div class="skills-grid" id="skills-container">
+            <!-- Dynamic skills rendered by JS -->
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="section-title">
+            <h2>Featured <span>Projects</span></h2>
+            <div class="title-underline"></div>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fas fa-laptop-code placeholder-icon"></i>
+                </div>
+                <div class="project-info">
+                    <h3>Full-Stack Web App</h3>
+                    <p>Modern responsive web application built with HTML5, CSS3, JavaScript, and PHP/MySQL backend architecture.</p>
+                    <div class="tags">
+                        <span>PHP</span> <span>MySQL</span> <span>JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/oussama2026dev" target="_blank"><i class="fab fa-github"></i> Source Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fas fa-network-wired placeholder-icon"></i>
+                </div>
+                <div class="project-info">
+                    <h3>Network & System Tools</h3>
+                    <p>Custom Python & Linux scripting project designed for automated network testing and system monitoring tasks.</p>
+                    <div class="tags">
+                        <span>Python</span> <span>Linux</span> <span>Networking</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/oussama2026dev" target="_blank"><i class="fab fa-github"></i> Source Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fas fa-terminal placeholder-icon"></i>
+                </div>
+                <div class="project-info">
+                    <h3>Software Engineering Project</h3>
+                    <p>Object-Oriented Desktop application developed using Java / C++ adhering to software engineering principles.</p>
+                    <div class="tags">
+                        <span>Java</span> <span>C++</span> <span>OOP</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/oussama2026dev" target="_blank"><i class="fab fa-github"></i> Source Code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section dark-bg">
+        <div class="section-title">
+            <h2>Get In <span>Touch</span></h2>
+            <div class="title-underline"></div>
+        </div>
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope icon"></i>
+                    <div>
+                        <h4>Email</h4>
+                        <p id="email-text">oussamaha780@gmail.com</p>
+                        <button class="copy-btn" onclick="copyEmail()"><i class="fas fa-copy"></i> Copy Email</button>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt icon"></i>
+                    <div>
+                        <h4>Phone / WhatsApp</h4>
+                        <p>+974 33387017</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
