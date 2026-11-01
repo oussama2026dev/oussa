@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oussama Hamdi | Software & Web Developer Portfolio</title>
-    <!-- FontAwesome for Icons -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <!-- CSS File -->
+    <!-- CSS Link -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Dynamic Particle Canvas -->
+    <!-- Particle Animation Canvas -->
     <canvas id="bg-canvas"></canvas>
 
     <!-- Navigation Bar -->
@@ -55,11 +55,12 @@
                 </div>
             </div>
 
-            <!-- Profile Image Area with Image Upload Feature -->
+            <!-- Profile Image Section -->
             <div class="hero-image-box">
                 <div class="image-wrapper">
-                    <img id="profile-img" src="https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?auto=format&fit=crop&w=600&q=80" alt="Oussama Hamdi">
-                    <label for="image-upload" class="upload-badge" title="Click to change your photo">
+                    <!-- تم دمج صورتك الشخصية هنا -->
+                    <img id="profile-img" src="profilee.jpg" alt=" ">
+                    <label for="image-upload" class="upload-badge" title="Change photo">
                         <i class="fas fa-camera"></i>
                     </label>
                     <input type="file" id="image-upload" accept="image/*" style="display: none;">
@@ -108,9 +109,7 @@
             <button class="filter-btn" data-filter="soft">Soft Skills</button>
         </div>
 
-        <div class="skills-grid" id="skills-container">
-            <!-- Dynamic skills rendered by JS -->
-        </div>
+        <div class="skills-grid" id="skills-container"></div>
     </section>
 
     <!-- Projects Section -->
@@ -196,3 +195,46 @@
                 </div>
 
                 <div class="contact-item">
+                    <i class="fab fa-linkedin-in icon"></i>
+                    <div>
+                        <h4>LinkedIn Profile</h4>
+                        <a href="https://www.linkedin.com/in/oussama-hamdi-a90a05418" target="_blank">Connect on LinkedIn</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fab fa-github icon"></i>
+                    <div>
+                        <h4>GitHub Profile</h4>
+                        <a href="https://github.com/oussama2026dev" target="_blank">github.com/oussama2026dev</a>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Subject" required>
+                </div>
+                <div class="form-group">
+                    <textarea rows="5" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary full-width">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Oussama Hamdi. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JS Link -->
+    <script src="script.js"></script>
+</body>
+</html>
