@@ -193,32 +193,48 @@ function initParticleCanvas() {
 
     animate();
 }
-// Contact Form Submission Handler
-const contactForm = document.getElementById("contact-form");
+/ Contact Form with Formspree JSON
+const contactForm = document.getElementById(“contact-form”);
 
 if (contactForm) {
-  contactForm.addEventListener("submit", async function(e) {
-    e.preventDefault(); // منع الانتقال إلى صفحة Formspree الخارجية
-    
+contactForm.addEventListener(“submit”, async function (event) {
+event.preventDefault();
+
+    const status = document.getElementById("form-status");
+    const submitBtn = document.getElementById("submit-btn");
     const formData = new FormData(contactForm);
-    const data = Object.fromEntries(formData.entries());
-
+    const data = {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        subject: formData.get("subject"),
+        message: formData.get("message")
+    };
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending...";
+    status.textContent = "";
     try {
-      const response = await fetch(contactForm.action, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(data)
-      });
+        const response = await fetch("https://formspree.io/f/xnppgrle", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+        if (response.ok) {
+            status.textContent = "Message sent successfully!";
+            contactForm.reset();
+        } else {
+            status.textContent = "Error sending message. Please try again.";
+        }
+    } catch (error) {
+        status.textContent = "Connection error. Please try again.";
+    }
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Send Message";
+});
 
-      if (response.ok) {
-        alert("تم إرسال رسالتك بنجاح!");
-        contactForm.reset();
-      } else {
-        alert("حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً.");
-      }
+});
     } catch (error) {
       alert("تعذر الاتصال بالخادم.");
     }
