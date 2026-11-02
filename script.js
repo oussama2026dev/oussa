@@ -193,16 +193,12 @@ function initParticleCanvas() {
 
     animate();
 }
-animate();
-  }
-} // نهاية دالة initParticleCanvas الموجودة أصلاً في السطر 195
-
-// لصق كود معالجة الفورم هنا في الأسفل تماماً:
+// Contact Form Submission Handler
 const contactForm = document.getElementById("contact-form");
 
 if (contactForm) {
   contactForm.addEventListener("submit", async function(e) {
-    e.preventDefault();
+    e.preventDefault(); // منع الانتقال إلى صفحة Formspree الخارجية
     
     const formData = new FormData(contactForm);
     const data = Object.fromEntries(formData.entries());
