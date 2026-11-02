@@ -193,3 +193,38 @@ function initParticleCanvas() {
 
     animate();
 }
+animate();
+  }
+} // نهاية دالة initParticleCanvas الموجودة أصلاً في السطر 195
+
+// لصق كود معالجة الفورم هنا في الأسفل تماماً:
+const contactForm = document.getElementById("contact-form");
+
+if (contactForm) {
+  contactForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(contactForm);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        alert("تم إرسال رسالتك بنجاح!");
+        contactForm.reset();
+      } else {
+        alert("حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً.");
+      }
+    } catch (error) {
+      alert("تعذر الاتصال بالخادم.");
+    }
+  });
+}
